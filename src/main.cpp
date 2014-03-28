@@ -31,7 +31,7 @@ CTxMemPool mempool;
 unsigned int nTransactionsUpdated = 0;
 
 map<uint256, CBlockIndex*> mapBlockIndex;
-uint256 hashGenesisBlock("0xef0221a526b93ecbd90fa2c77ebae3bca8c54dffaae09cccb9e81e535958a06d");
+uint256 hashGenesisBlock("0x449239d8eb4c2f420fa9fa0f0fac5d2a29cd9af0a82e963be27675eac5cb58ab");
 static CBigNum bnProofOfWorkLimit(~uint256(0) >> 20); // Diffcoin: starting difficulty is 1 / 2^12
 CBlockIndex* pindexGenesisBlock = NULL;
 int nBestHeight = -1;
@@ -2748,11 +2748,22 @@ bool LoadBlockIndex()
 {
     if (fTestNet)
     {
+        // Genesis Block:
+        // block.nTime = 1395974015
+        // block.nNonce = 386951158
+        // block.GetHash = 57c55df47e191b8c5f39cae289e41fff0d78224fc77e79d3ae0c2fd13c563cc3
+        // block.hashMerkleRoot = 066b74fd4413d601493f3bf060a6a5fd5b9e9086e7e0ad97b4c00f8a2007feeb
+        // CBlock(hash=57c55df47e191b8c5f39cae289e41fff0d78224fc77e79d3ae0c2fd13c563cc3, input=010000000000000000000000000000000000000000000000000000000000000000000000ebfe07208a0fc0b497ade0e786909e5bfda5a660f03b3f4901d61344fd746b067fdf3453f0ff0f1ef6671017, PoW=000001850cdb0a952419cba739c0dcced3a07c41d4b77e44821ddaff8eea7d68, ver=1, hashPrevBlock=0000000000000000000000000000000000000000000000000000000000000000, hashMerkleRoot=066b74fd4413d601493f3bf060a6a5fd5b9e9086e7e0ad97b4c00f8a2007feeb, nTime=1395974015, nBits=1e0ffff0, nNonce=386951158, vtx=1)
+        //   CTransaction(hash=066b74fd4413d601493f3bf060a6a5fd5b9e9086e7e0ad97b4c00f8a2007feeb, ver=1, vin.size=1, vout.size=1, nLockTime=0)
+        //     CTxIn(COutPoint(0000000000000000000000000000000000000000000000000000000000000000, 4294967295), coinbase 04ffff001d01044c554e696e652041697220466f72636520636f6d6d616e64657273206669726564206f766572206e75636c656172206d697373696c652074657374206368656174696e6720332d32372d2d3230313420636e6e2e636f6d)
+        //     CTxOut(nValue=0.00000000, scriptPubKey=0442c8153f534c65a7797afd82212d)
+        //   vMerkleTree: 066b74fd4413d601493f3bf060a6a5fd5b9e9086e7e0ad97b4c00f8a2007feeb
+
         pchMessageStart[0] = 0xfc;
         pchMessageStart[1] = 0xc1;
         pchMessageStart[2] = 0xb7;
         pchMessageStart[3] = 0xdc;
-        hashGenesisBlock = uint256("0xf5ae71e26c74beacc88382716aced69cddf3dffff24f384e1808905e0188f68f");
+        hashGenesisBlock = uint256("0x57c55df47e191b8c5f39cae289e41fff0d78224fc77e79d3ae0c2fd13c563cc3");
     }
 
     //
@@ -2778,44 +2789,50 @@ bool InitBlockIndex() {
     // Only add the genesis block if not reindexing (in which case we reuse the one already on disk)
     if (!fReindex) {
         // Genesis Block:
-        // CBlock(hash=12a765e31ffd4059bada, PoW=0000050c34a64b415b6b, ver=1, hashPrevBlock=00000000000000000000, hashMerkleRoot=97ddfbbae6, nTime=1317972665, nBits=1e0ffff0, nNonce=2084524493, vtx=1)
-        //   CTransaction(hash=97ddfbbae6, ver=1, vin.size=1, vout.size=1, nLockTime=0)
-        //     CTxIn(COutPoint(0000000000, -1), coinbase 04ffff001d0104404e592054696d65732030352f4f63742f32303131205374657665204a6f62732c204170706c65e280997320566973696f6e6172792c2044696573206174203536)
-        //     CTxOut(nValue=50.00000000, scriptPubKey=040184710fa689ad5023690c80f3a4)
-        //   vMerkleTree: 97ddfbbae6
+        // block.nTime = 1395976081
+        // block.nNonce = 2203583
+        // block.GetHash = 449239d8eb4c2f420fa9fa0f0fac5d2a29cd9af0a82e963be27675eac5cb58ab
+        // block.hashMerkleRoot = 066b74fd4413d601493f3bf060a6a5fd5b9e9086e7e0ad97b4c00f8a2007feeb
+        // CBlock(hash=449239d8eb4c2f420fa9fa0f0fac5d2a29cd9af0a82e963be27675eac5cb58ab, input=010000000000000000000000000000000000000000000000000000000000000000000000ebfe07208a0fc0b497ade0e786909e5bfda5a660f03b3f4901d61344fd746b0691e73453f0ff0f1ebf9f2100, PoW=0000073035a0f9dbbe05b583ee5a82ac5e3eaabb466a35afa7a42d0402a99f1e, ver=1, hashPrevBlock=0000000000000000000000000000000000000000000000000000000000000000, hashMerkleRoot=066b74fd4413d601493f3bf060a6a5fd5b9e9086e7e0ad97b4c00f8a2007feeb, nTime=1395976081, nBits=1e0ffff0, nNonce=2203583, vtx=1)
+        //   CTransaction(hash=066b74fd4413d601493f3bf060a6a5fd5b9e9086e7e0ad97b4c00f8a2007feeb, ver=1, vin.size=1, vout.size=1, nLockTime=0)
+        //     CTxIn(COutPoint(0000000000000000000000000000000000000000000000000000000000000000, 4294967295), coinbase 04ffff001d01044c554e696e652041697220466f72636520636f6d6d616e64657273206669726564206f766572206e75636c656172206d697373696c652074657374206368656174696e6720332d32372d2d3230313420636e6e2e636f6d)
+        //     CTxOut(nValue=0.00000000, scriptPubKey=0442c8153f534c65a7797afd82212d)
+        //   vMerkleTree: 066b74fd4413d601493f3bf060a6a5fd5b9e9086e7e0ad97b4c00f8a2007feeb
+
 
         // Genesis block
-        const char* pszTimestamp = "bmatusiak";
+        const char* pszTimestamp = "Nine Air Force commanders fired over nuclear missile test cheating 3-27--2014 cnn.com";
         CTransaction txNew;
         txNew.vin.resize(1);
         txNew.vout.resize(1);
         txNew.vin[0].scriptSig = CScript() << 486604799 << CBigNum(4) << vector<unsigned char>((const unsigned char*)pszTimestamp, (const unsigned char*)pszTimestamp + strlen(pszTimestamp));
-        txNew.vout[0].nValue = 50 * COIN;
-        txNew.vout[0].scriptPubKey = CScript() << ParseHex("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f") << OP_CHECKSIG;
+        txNew.vout[0].nValue = 0;
+        txNew.vout[0].scriptPubKey = CScript() << ParseHex("0442c8153f534c65a7797afd82212d3429decdd54c9c3f6de1a71801dcecc449f0d8f4142c381b35cc3cd50673a651f5b1b0bdd9837a6f809f30d768d4e28692c1") << OP_CHECKSIG;
         CBlock block;
         block.vtx.push_back(txNew);
         block.hashPrevBlock = 0;
         block.hashMerkleRoot = block.BuildMerkleTree();
         block.nVersion = 1;
-        block.nTime    = 1395031919;
+        block.nTime    = 1395976081;
         block.nBits    = 0x1e0ffff0;
-        block.nNonce   = 328594;
+        block.nNonce   = 2203583;
 
         if (fTestNet)
         {
-            block.nTime    = 1317798646;
-            block.nNonce   = 385270584;
+            block.nTime    = 1395974015;
+            block.nNonce   = 386951158;
         }
-
+        
         //// debug print
         uint256 hash = block.GetHash();
-        printf("%s\n", hash.ToString().c_str());
-        printf("%s\n", hashGenesisBlock.ToString().c_str());
-        printf("%s\n", block.hashMerkleRoot.ToString().c_str());
-        assert(block.hashMerkleRoot == uint256("0x233e83f1165e6d8a06c1032119b28a3bc9b3f3a9fcebe99426eb029e1f5c2c28"));
+        printf("hash %s\n", hash.ToString().c_str());
+        printf("hashGenesisBlock %s\n", hashGenesisBlock.ToString().c_str());
+        printf("block.hashMerkleRoot %s\n", block.hashMerkleRoot.ToString().c_str());
+        assert(block.hashMerkleRoot == uint256("0x066b74fd4413d601493f3bf060a6a5fd5b9e9086e7e0ad97b4c00f8a2007feeb"));
         block.print();
         assert(hash == hashGenesisBlock);
-
+            
+        
         // Start new block file
         try {
             unsigned int nBlockSize = ::GetSerializeSize(block, SER_DISK, CLIENT_VERSION);
